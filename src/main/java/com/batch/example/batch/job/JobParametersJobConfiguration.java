@@ -16,14 +16,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
-public class SimpleJobConfiguration {
+public class JobParametersJobConfiguration {
 
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
 
     @Bean
-    public Job simpleJob() {
-        return jobBuilderFactory.get("simpleJob")
+    public Job parametersJob() {
+        return jobBuilderFactory.get("parametersJob")
             .start(simpleStep1(null))
             .next(simpleStep2(null))
             .build();
