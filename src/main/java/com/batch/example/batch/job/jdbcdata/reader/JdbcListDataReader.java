@@ -10,24 +10,24 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
-import com.batch.example.batch.job.jdbcdata.dto.entity.Person;
-import com.batch.example.batch.job.jdbcdata.repository.PersonRepository;
+import com.batch.example.batch.job.jdbcdata.dao.entity.People;
+import com.batch.example.batch.job.jdbcdata.dao.repository.PeopleRepository;
 
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class JdbcListDataReader implements ItemReader<List<Person>> {
+public class JdbcListDataReader implements ItemReader<List<People>> {
 
-    private final PersonRepository personRepository;
+    private final PeopleRepository peopleRepository;
     private int lastSeq = 0;
     private int limit = 2;
 
     @Override
-    public List<Person> read()  throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
+    public List<People> read()  throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
 
         PageRequest pageable = PageRequest.of(lastSeq, limit);
-        Page<Person> personPage = personRepository.findAll(pageable);
+        Page<People> personPage = peopleRepository.findAll(pageable);
         if (personPage.isEmpty()) {
             return null;
         }

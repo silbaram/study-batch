@@ -22,36 +22,36 @@ public class StepNextJobConfiguration {
     @Bean
     public Job stepNextJob() {
         return jobBuilderFactory.get("stepNextJob")
-            .start(step1())
-            .next(step2())
-            .next(step3())
+            .start(nextStep1())
+            .next(nextStep2())
+            .next(nextStep3())
             .build();
     }
 
     @Bean
-    public Step step1() {
-        return stepBuilderFactory.get("step1")
+    public Step nextStep1() {
+        return stepBuilderFactory.get("nextStep1")
             .tasklet((contribution, chunkContext) -> {
-                log.info(">>>>> This is Step1");
+                log.info(">>>>> This is nextStep1");
                 return RepeatStatus.FINISHED;
             })
             .build();
     }
 
     @Bean
-    public Step step2() {
-        return stepBuilderFactory.get("step2")
+    public Step nextStep2() {
+        return stepBuilderFactory.get("nextStep2")
             .tasklet((contribution, chunkContext) -> {
-                log.info(">>>>> This is Step2");
+                log.info(">>>>> This is nextStep2");
                 return RepeatStatus.FINISHED;
             })
             .build();
     }
 
-    public Step step3() {
-        return stepBuilderFactory.get("step3")
+    public Step nextStep3() {
+        return stepBuilderFactory.get("nextStep3")
             .tasklet((contribution, chunkContext) -> {
-                log.info(">>>>> This is Step3");
+                log.info(">>>>> This is nextStep3");
                 return RepeatStatus.FINISHED;
             })
             .build();

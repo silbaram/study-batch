@@ -2,7 +2,7 @@
 ```sql
 DROP TABLE people;
 
-CREATE TABLE spring_batch.people (
+CREATE TABLE people (
 person_id INT auto_increment PRIMARY KEY,
 name varchar(20) NULL
 )
@@ -11,73 +11,73 @@ DEFAULT CHARSET=utf8mb4
 COLLATE=utf8mb4_unicode_ci;
 
 
-INSERT INTO spring_batch.people
+INSERT INTO people
 (name)
 VALUES('a');
-INSERT INTO spring_batch.people
+INSERT INTO people
 (name)
 VALUES('b');
-INSERT INTO spring_batch.people
+INSERT INTO people
 (name)
 VALUES('c');
-INSERT INTO spring_batch.people
+INSERT INTO people
 (name)
 VALUES('d');
-INSERT INTO spring_batch.people
+INSERT INTO people
 (name)
 VALUES('e');
-INSERT INTO spring_batch.people
+INSERT INTO people
 (name)
 VALUES('f');
-INSERT INTO spring_batch.people
+INSERT INTO people
 (name)
 VALUES('g');
-INSERT INTO spring_batch.people
+INSERT INTO people
 (name)
 VALUES('h');
-INSERT INTO spring_batch.people
+INSERT INTO people
 (name)
 VALUES('l');
-INSERT INTO spring_batch.people
+INSERT INTO people
 (name)
 VALUES('m');
-INSERT INTO spring_batch.people
+INSERT INTO people
 (name)
 VALUES('n');
-INSERT INTO spring_batch.people
+INSERT INTO people
 (name)
 VALUES('o');
-INSERT INTO spring_batch.people
+INSERT INTO people
 (name)
 VALUES('p');
-INSERT INTO spring_batch.people
+INSERT INTO people
 (name)
 VALUES('q');
-INSERT INTO spring_batch.people
+INSERT INTO people
 (name)
 VALUES('r');
-INSERT INTO spring_batch.people
+INSERT INTO people
 (name)
 VALUES('s');
-INSERT INTO spring_batch.people
+INSERT INTO people
 (name)
 VALUES('t');
-INSERT INTO spring_batch.people
+INSERT INTO people
 (name)
 VALUES('u');
-INSERT INTO spring_batch.people
+INSERT INTO people
 (name)
 VALUES('v');
-INSERT INTO spring_batch.people
+INSERT INTO people
 (name)
 VALUES('w');
-INSERT INTO spring_batch.people
+INSERT INTO people
 (name)
 VALUES('x');
-INSERT INTO spring_batch.people
+INSERT INTO people
 (name)
 VALUES('y');
-INSERT INTO spring_batch.people
+INSERT INTO people
 (name)
 VALUES('z');
 ```

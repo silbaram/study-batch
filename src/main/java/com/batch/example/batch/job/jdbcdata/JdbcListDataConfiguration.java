@@ -10,7 +10,7 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.batch.example.batch.job.jdbcdata.dto.entity.Person;
+import com.batch.example.batch.job.jdbcdata.dao.entity.People;
 import com.batch.example.batch.job.jdbcdata.reader.JdbcListDataReader;
 import com.batch.example.batch.job.processing.PersonListItemProcessor;
 
@@ -38,17 +38,17 @@ public class JdbcListDataConfiguration {
     @Bean
     public Step step() {
         return stepBuilderFactory.get("step")
-            .<List<Person>, List<Person>>chunk(chunkSize)
+            .<List<People>, List<People>>chunk(chunkSize)
             .reader(jdbcListDataReader)
             .processor(new PersonListItemProcessor())
             .writer(writer())
             .build();
     }
 
-    private ItemWriter<List<Person>> writer() {
+    private ItemWriter<List<People>> writer() {
         return items -> {
-            for (List<Person> persons : items) {
-                for (Person person : persons) {
+            for (List<People> persons : items) {
+                for (People person : persons) {
                     log.info("Current Person : " + person);
                 }
             }

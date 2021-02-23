@@ -13,8 +13,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Sort.Direction;
 
-import com.batch.example.batch.job.jdbcdata.dto.entity.Person;
-import com.batch.example.batch.job.jdbcdata.repository.PersonRepository;
+import com.batch.example.batch.job.jdbcdata.dao.entity.People;
+import com.batch.example.batch.job.jdbcdata.dao.repository.PeopleRepository;
 import com.batch.example.batch.job.processing.PersonItemProcessor;
 
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class JdbcDataConfiguration {
 
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
-    private final PersonRepository personRepository;
+    private final PeopleRepository personRepository;
 
     private static final int chunkSize = 2;
 
@@ -41,7 +41,7 @@ public class JdbcDataConfiguration {
     @Bean
     public Step step1() {
         return stepBuilderFactory.get("step1")
-            .<Person, Person>chunk(chunkSize)
+            .<People, People>chunk(chunkSize)
             .reader(reader())
             .processor(processor())
             .writer(writer())
@@ -49,19 +49,19 @@ public class JdbcDataConfiguration {
     }
 
     @Bean
-    public RepositoryItemReader<Person> reader() {
-        return new RepositoryItemReaderBuilder<Person>()
+    public RepositoryItemReader<People> reader() {
+        return new RepositoryItemReaderBuilder<People>()
             .repository(personRepository)
             .pageSize(chunkSize)
             .methodName("findAll")
-            .sorts(Collections.singletonMap("person_id", Direction.ASC))
+            .sorts(Collections.singletonMap("personId", Direction.ASC))
             .name("personRepository")
             .build();
     }
 
-    private ItemWriter<Person> writer() {
+    private ItemWriter<People> writer() {
         return items -> {
-            for (Person person : items) {
+            for (People person : items) {
                 log.info("Current Person : " + person);
             }
         };
