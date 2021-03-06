@@ -1,17 +1,16 @@
 package com.batch.example.batch.job.partition;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.persistence.EntityManagerFactory;
-
+import com.batch.example.batch.job.jdbcdata.dao.entity.People;
+import com.batch.example.batch.job.jdbcdata.dao.repository.PeopleRepository;
+import com.batch.example.batch.job.processing.PersonItemProcessor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.partition.support.TaskExecutorPartitionHandler;
-import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JpaPagingItemReader;
 import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilder;
@@ -21,11 +20,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-import com.batch.example.batch.job.jdbcdata.dao.entity.People;
-import com.batch.example.batch.job.jdbcdata.dao.repository.PeopleRepository;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import javax.persistence.EntityManagerFactory;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -104,7 +101,7 @@ public class PartitionConfiguration {
     @Bean(name = JOB_NAME + "_partitionStep")
     public Step partitionStep() {
         return stepBuilderFactory.get(JOB_NAME + "_partitionStep")
-            .<People, Long>chunk(chunkSize)
+            .<People, People>chunk(chunkSize)
             .reader(reader(null, null))
             .processor(processor())
             .writer(writer(null, null))
@@ -135,14 +132,14 @@ public class PartitionConfiguration {
             .build();
     }
 
-    @Bean
-    public ItemProcessor<People, Long> processor() {
-        return People::getPersonId;
+    @Bean(name = JOB_NAME + "_processor")
+    public PersonItemProcessor processor() {
+        return new PersonItemProcessor();
     }
 
     @Bean(name = JOB_NAME + "_writer")
     @StepScope
-    public ItemWriter<Long> writer(@Value("#{stepExecutionContext[minId]}") Long minId,
+    public ItemWriter<People> writer(@Value("#{stepExecutionContext[minId]}") Long minId,
         @Value("#{stepExecutionContext[maxId]}") Long maxId) {
 
         return items -> {
